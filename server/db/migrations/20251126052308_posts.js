@@ -7,7 +7,7 @@ export async function up(knex) {
     table
       .integer('user_id')
       .notNullable()
-      .references('users.id')
+      .references('users.auth_id')
       .onDelete('CASCADE')
     table.timestamp('date_added').notNullable().defaultTo(knex.fn.now())
     table.string('message')
