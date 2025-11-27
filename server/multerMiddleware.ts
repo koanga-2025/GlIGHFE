@@ -1,14 +1,14 @@
-import * as cloudinary from 'cloudinary'
-console.log(cloudinary)
+import { v2 as cloudinary } from 'cloudinary'
+// console.log(cloudinary)
 import { CloudinaryStorage } from 'multer-storage-cloudinary'
 import dotenv from 'dotenv'
 import multer from 'multer'
 
 dotenv.config()
 
-const c2 = cloudinary.v2
+// const c2 = cloudinary.v2
 
-cloudinary.v2.config({
+cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
@@ -16,7 +16,7 @@ cloudinary.v2.config({
 })
 
 const storage = new CloudinaryStorage({
-  cloudinary: c2,
+  cloudinary,
   params: async (req, file) => {
     let publicId
 
