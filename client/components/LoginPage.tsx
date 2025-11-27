@@ -44,7 +44,7 @@ function LoginPage() {
 
   useEffect(() => {
     if (isAuthenticated && userData) {
-      navigate('/onboarding')
+      navigate('/feed')
     }
   }, [userData, isAuthenticated, navigate])
 
@@ -82,49 +82,64 @@ function LoginPage() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <IfNotAuthenticated>
-        <h1>Login Page</h1>
-        <button onClick={handleLogin}>Log In</button>
+        <h1>GlIGHFE</h1>
+        <button onClick={handleLogin}>
+          <img src="../../images/loginButton96.png" alt="Login Logo" />
+        </button>
       </IfNotAuthenticated>
       <IfAuthenticated>
-        <p>You are logged in!! Make Profile Dummy...</p>
+        <p className='mt-5'>Create Account</p>
         <form onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="Name">
+            <label
+              htmlFor="Name"
+              className="text-heading mb-2.5 mt-4 block text-sm font-medium"
+            >
               Name:
               <input
                 type="text"
                 id="name"
                 name="name"
                 placeholder="User Name"
+                className="bg-neutral-secondary-medium border-default-medium text-heading rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body block w-full rounded-lg border border-black px-3 py-2.5 text-sm"
                 value={formState.name}
                 onChange={handleChange}
               />
             </label>
           </div>
           <div>
-            <label htmlFor="Bio">
+            <label
+              htmlFor="Bio"
+              className="text-heading mb-2.5 block text-sm font-medium"
+            >
               Bio:
               <input
                 name="bio"
                 type="text"
                 id="bio"
                 placeholder="Bio"
+                className="bg-neutral-secondary-medium border-default-medium text-heading rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body block w-full rounded-lg border border-black px-3 py-2.5 text-sm"
                 value={formState.bio}
                 onChange={handleChange}
               ></input>
             </label>
             {/* Also profile picture */}
           </div>
-          <button type="submit">Create Profile</button>
+          <button type="button" className="bg-lime-300 ml-7 box-border border border-transparent hover:bg-success-strong focus:ring-4 focus:ring-success-medium shadow-xs font-medium leading-5 rounded-full text-sm px-4 py-2.5 focus:outline-none">Create Profile</button>
         </form>
       </IfAuthenticated>
       <IfNotAuthenticated>
-        <p>Please log in to view and edit your profile.</p>
+        <p>Please log in create a profile and explore!</p>
       </IfNotAuthenticated>
     </div>
   )
 }
 
 export default LoginPage
+
+// <div>
+//         <label for="visitors" class="block mb-2.5 text-sm font-medium text-heading">Base Input</label>
+//         <input type="text" id="visitors" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="" required />
+//     </div>

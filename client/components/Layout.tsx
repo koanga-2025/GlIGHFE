@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 export default function Layout() {
   return (
     <>
-      <header>
+      <header className='flex flex-col items-center'>
         <h1>GLIFE!</h1>
       </header>
       <main className="pb-20">
