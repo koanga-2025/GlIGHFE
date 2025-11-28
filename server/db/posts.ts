@@ -4,7 +4,7 @@ import { Post, PostData } from '../../models/post'
 const db = connection
 export async function getAllPosts(db = connection): Promise<Post[]> {
   const posts = await db('posts')
-    .join('users', 'posts.user_id', 'users.id')
+    .join('users', 'posts.user_id', 'users.auth_id')
     .select(
       'posts.id as id',
       'posts.user_id as userId',
@@ -13,7 +13,8 @@ export async function getAllPosts(db = connection): Promise<Post[]> {
       'posts.message',
       'posts.date_added as dateAdded',
     )
-    .orderBy('posts.date_added', 'desc')
+  // .orderBy('posts.date_added', 'desc')
+  console.log(posts)
   return posts
 }
 
