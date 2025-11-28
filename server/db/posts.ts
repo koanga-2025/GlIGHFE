@@ -2,7 +2,7 @@ import connection from './connection'
 import { Post, PostData } from '../../models/post'
 
 const db = connection
-export async function getAllPosts(): Promise<Post[]> {
+export async function getAllPosts(db = connection): Promise<Post[]> {
   const posts = await db('posts')
     .join('users', 'posts.user_id', 'users.id')
     .select(
