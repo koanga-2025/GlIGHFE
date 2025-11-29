@@ -51,38 +51,25 @@ function ProfilePage() {
     return <p className="text-center text-gray-500">Loading profile...</p>
   }
 
-  if (isProfileError) {
+  const errorStates = [
+    { isError: isProfileError, error: profileError, label: 'profile' },
+    { isError: isPostsError, error: postsError, label: 'posts' },
+    { isError: isFollowersError, error: followersError, label: 'followers' },
+    {
+      isError: isFollowingError,
+      error: followingError,
+      label: 'following list',
+    },
+  ]
+
+  const firstError = errorStates.find((s) => s.isError)
+
+  if (firstError) {
     return (
       <p className="text-red-500">
-        Error loading profile:{' '}
-        {profileError instanceof Error ? profileError.message : 'Unknown error'}
-      </p>
-    )
-  }
-  if (isPostsError) {
-    return (
-      <p className="text-red-500">
-        Error loading posts:{' '}
-        {postsError instanceof Error ? postsError.message : 'Unknown error'}
-      </p>
-    )
-  }
-  if (isFollowersError) {
-    return (
-      <p className="text-red-500">
-        Error loading followers:{' '}
-        {followersError instanceof Error
-          ? followersError.message
-          : 'Unknown error'}
-      </p>
-    )
-  }
-  if (isFollowingError) {
-    return (
-      <p className="text-red-500">
-        Error loading following list:{' '}
-        {followingError instanceof Error
-          ? followingError.message
+        Error loading {firstError.label}:{' '}
+        {firstError.error instanceof Error
+          ? firstError.error.message
           : 'Unknown error'}
       </p>
     )

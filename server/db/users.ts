@@ -50,7 +50,7 @@ export async function getUserPosts(
   authId: string,
   testDb?: Knex,
 ): Promise<Post[]> {
-  const connection = testDb || db // Use testDb if provided, otherwise use default db
+  const connection = testDb || db
   const postsFromDb = await connection('posts')
     .join('users', 'posts.user_id', 'users.id')
     .select(
@@ -64,15 +64,7 @@ export async function getUserPosts(
     .where('users.auth_id', authId)
     .orderBy('posts.date_added', 'desc')
 
-  // A* Map over the results and convert the date string to a UNIX timestamp in JavaScript
-  const posts = postsFromDb.map((post) => {
-    return {
-      ...post,
-      dateAdded: new Date(post.dateAdded).getTime() / 1000, // Convert UNIX timestamp
-    }
-  })
-
-  return posts
+  return postsFromDb as Post[] // Removed the map and added type assertion
 }
 
 // Get followers of User
