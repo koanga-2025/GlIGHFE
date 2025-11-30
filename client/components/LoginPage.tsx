@@ -85,13 +85,13 @@ function LoginPage() {
     }
   }
 
-  if (isLoading) {
-    return <Loading />
-  }
+  // if (isLoading) {
+  //   return <Loading />
+  // }
 
-  if (isError) {
-    return <div>Error loading user data</div>
-  }
+  // if (isError) {
+  //   return <div>Error loading user data</div>
+  // }
 
   return (
     <div className="flex flex-col items-center">
