@@ -2,8 +2,8 @@ import { Outlet } from 'react-router'
 import Navbar from './Navbar'
 
 export default function Layout() {
-  const font = 'sans'
-  // const font = 'Wingdings'
+  //const font = 'sans'
+  const font = 'Wingdings'
   return (
     <div className={`font-[${font}]`}>
       <header className="flex flex-col items-center">

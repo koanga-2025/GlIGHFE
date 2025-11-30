@@ -6,6 +6,7 @@ import {
   useFollowing,
 } from '../hooks/useProfile.js'
 import Post from './Post.js'
+import Loading from './Loading.js'
 
 function ProfilePage() {
   const { authId } = useParams<{ authId: string }>()
@@ -48,7 +49,7 @@ function ProfilePage() {
     isFollowersLoading ||
     isFollowingLoading
   ) {
-    return <p className="text-center text-gray-500">Loading profile...</p>
+    return <Loading />
   }
 
   const errorStates = [

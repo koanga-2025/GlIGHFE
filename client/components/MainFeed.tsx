@@ -1,11 +1,12 @@
 import { usePosts } from '../hooks/usePosts'
+import Loading from './Loading'
 import Post from './Post'
 
 function MainFeed() {
   const { data: posts, isLoading, isError } = usePosts()
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loading />
   }
 
   if (isError) {
