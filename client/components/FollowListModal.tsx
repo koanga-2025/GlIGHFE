@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react'
-import { Link } from 'react-router'
+// import { Link } from 'react-router'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { User } from '../../models/user'
+import UserProfileLink from './common/UserProfileLink'
 
 interface FollowListModalProps {
   isOpen: boolean
@@ -111,29 +112,19 @@ const FollowListModal: React.FC<FollowListModalProps> = ({
         <div className="max-h-64 overflow-y-auto">
           {users.length > 0 ? (
             users.map((user) => (
-              <div
+              <UserProfileLink
                 key={user.auth_id}
-                className="flex items-center space-x-4 border-b py-2 last:border-b-0"
+                user={user}
+                onClick={onClose}
+                className="flex items-center space-x-4 border-b py-2 last:border-b hover:bg-gray-50"
               >
-                <Link to={`/profile/${user.auth_id}`} onClick={onClose}>
-                  <img
-                    src={
-                      user.profile_picture || '/images/placeholder-avatar.png'
-                    }
-                    alt={`${user.name}'s profile`}
-                    className="h-10 w-10 rounded-full bg-gray-200 object-cover"
-                  />
-                </Link>
-                <div className="flex-grow">
-                  <Link
-                    to={`/profile/${user.auth_id}`}
-                    className="hover:underline"
-                    onClick={onClose}
-                  >
-                    <p className="font-medium text-gray-900">{user.name}</p>
-                  </Link>
-                </div>
-              </div>
+                <img
+                  src={user.profile_picture || '/images/placeholder-avatar.png'}
+                  alt={`${user.name}'s profile`}
+                  className="h-10 w-10 rounded-full bg-gray-200 object-cover"
+                />
+                <p className="font-medium text-gray-900">{user.name}</p>
+              </UserProfileLink>
             ))
           ) : (
             <div className="flex items-center justify-center space-x-2 text-gray-400">
