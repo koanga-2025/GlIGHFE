@@ -90,13 +90,17 @@ function ProfilePage() {
           alt={`${userProfile.name}'s profile`}
           className="h-24 w-24 rounded-full border-4 border-purple-500 object-cover"
         /> */}
-        <div className="mb-6 flex h-48 w-48 items-center space-x-4 overflow-hidden rounded-[100%] bg-gray-900 p-4 shadow-md">
+        <div className="mb-6 flex h-48 w-48 items-center space-x-4 overflow-hidden rounded-[100%] bg-gray-900 shadow-md">
           {userProfile.profile_picture && (
-            <Image
-              cloudName="dfjgv0mp6"
-              publicId={userProfile.profile_picture}
-              crop="fill"
-            />
+            <div className="-m-0">
+              <Image
+                cloudName="dfjgv0mp6"
+                publicId={userProfile.profile_picture}
+                width="192"
+                height="192"
+                crop="fill"
+              />
+            </div>
           )}
         </div>
         <div>
