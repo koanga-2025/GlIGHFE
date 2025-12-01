@@ -19,8 +19,9 @@
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "knex": "knex --knexfile ./server/db/knexfile.js",
     "format": "prettier -w '**/*.{js,jsx,ts,tsx}'",
-    "render:build": "npm install && npm run build && npm prune --omit=dev && NODE_ENV='production' npm run knex migrate:latest",
-    "render:start": "node dist/server.js"
+       "render:start": "node dist/server.js",
+    "render:build": "npm install && npm run build && npm prune --omit=dev && NODE_ENV='production' npm run knex migrate:latest"
+ 
   },
   "eslintConfig": {
     "extends": "@devacademy/eslint-config/react",
@@ -103,3 +104,4 @@
   },
   "browserslist": "> 2%, not dead"
 }
+
