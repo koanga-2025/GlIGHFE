@@ -16,6 +16,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 function ProfilePage() {
   const { user } = useAuth0()
   const { authId } = useParams<{ authId: string }>()
+  const [editMode, setEditMode] = useState(false)
 
   const {
     data: userProfile,
