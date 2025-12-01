@@ -1,5 +1,5 @@
 import { Post as PostType } from '../../models/post'
-
+import { CommentSection } from './CommentSection'
 interface Props {
   post: PostType
 }
@@ -19,6 +19,7 @@ function Post({ post }: Props) {
       <p className="mt-1 text-sm text-gray-500">
         {new Date(post.dateAdded * 1000).toLocaleDateString()}
       </p>
+      <CommentSection postId={post.id} />
     </div>
   )
 }
