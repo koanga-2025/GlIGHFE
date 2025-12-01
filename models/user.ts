@@ -1,10 +1,10 @@
 export interface User {
   id: number
-  auth_id: string
+  authId: string
   name: string
   bio: string
   font: string
-  profile_picture: string
+  profilePicture: string
 }
 
 export interface UserData {
