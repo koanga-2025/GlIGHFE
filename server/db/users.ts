@@ -9,7 +9,17 @@ import { Knex } from 'knex'
 // }
 
 export async function getUserById(auth_id: string): Promise<User> {
-  const result = await db('users').select().first().where('auth_id', auth_id)
+  const result = await db('users')
+    .where('auth_id', auth_id)
+    .select(
+      'id',
+      'auth_id as authId',
+      'name',
+      'bio',
+      'font',
+      'profile_picture as profilePicture',
+    )
+    .first()
   return result
 }
 
