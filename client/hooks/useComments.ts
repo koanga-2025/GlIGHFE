@@ -11,7 +11,7 @@ export function useComments(postId: number) {
     queryKey: ['comments', postId],
     queryFn: ({ queryKey }) => {
       const postId = queryKey[1]
-      return getCommentsByPostId(postId)
+      return getCommentsByPostId(postId as number)
     },
   })
   return {

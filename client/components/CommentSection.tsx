@@ -1,5 +1,5 @@
 import Comment from './Comment'
-import { Comment as CommentType, CommentDraft } from '../../models/comment'
+import { Comment as CommentType, CommentData } from '../../models/comment'
 import { useComments } from '../hooks/useComments'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { useEffect, useState } from 'react'
@@ -8,7 +8,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { addComment } from '../apis/comments'
 
-export function CommentSection({ postId }) {
+interface Props {
+  postId: number
+}
+export function CommentSection({ postId }: Props) {
   const queryClient = useQueryClient()
   const { data: comments, isPending, isError } = useComments(postId)
   const [commentsOpen, setCommentsOpen] = useState(false)
@@ -19,6 +22,7 @@ export function CommentSection({ postId }) {
     userId: '',
     message: '',
     image: '',
+    postId: 0,
   })
   // const {
   //   data: userData,
@@ -31,18 +35,19 @@ export function CommentSection({ postId }) {
   // })
 
   useEffect(() => {
-    if (user) {
+    if (user && authId) {
       setFormData({
         userId: authId,
-        message: '',
-        image: '',
+        message: formData.message,
+        image: formData.image,
         postId: postId,
+        font: formData.font,
       })
     }
   }, [authId, postId, user])
 
   const addCommentMutation = useMutation({
-    mutationFn: (newComment: CommentDraft) => addComment(newComment),
+    mutationFn: (newComment: CommentData) => addComment(newComment),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', postId] })
       setFormData({ ...formData, message: '' })
@@ -72,18 +77,21 @@ export function CommentSection({ postId }) {
     e.preventDefault()
     console.log('hjelp')
 
-    const newComment: CommentDraft = {
-      postId: postId,
-      userId: authId,
-      message: formData.message,
-      // image: formData.image,
-    }
+    if (authId) {
+      const newComment: CommentData = {
+        postId: postId,
+        userId: authId,
+        message: formData.message,
+        image: formData.image,
+        font: formData.font,
+      }
 
-    try {
-      await addCommentMutation.mutateAsync(newComment)
-      console.log('mutating')
-    } catch (error) {
-      console.error('Failed to add comment:', error)
+      try {
+        await addCommentMutation.mutateAsync(newComment)
+        console.log('mutating')
+      } catch (error) {
+        console.error('Failed to add comment:', error)
+      }
     }
   }
 

@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { Comment, CommentDraft } from '../../models/comment'
+import { Comment, CommentData } from '../../models/comment'
 
 const rootUrl = '/api/v1/comments'
 
@@ -13,13 +13,14 @@ export async function getCommentsByUserId(id: number) {
   return response.body
 }
 
-export async function addComment(commentData: CommentDraft) {
+export async function addComment(commentData: CommentData) {
+  // console.log(commentData)
   const response = await request.post(`${rootUrl}`).send(commentData)
   return response.body
 }
 
-export async function editComment(id: number, commentData: Comment) {
-  const response = await request.patch(`${rootUrl}/${id}`).send(commentData)
+export async function editComment(id: number, comment: Comment) {
+  const response = await request.patch(`${rootUrl}/${id}`).send(comment)
   return response.body
 }
 

@@ -1,5 +1,5 @@
 import connection from './connection'
-import { Comment } from '../../models/comment'
+import { Comment, CommentData } from '../../models/comment'
 
 const db = connection
 
@@ -33,9 +33,9 @@ export async function getCommentsByUserId(userId: number) {
 }
 
 //ADD
-export async function addComment(commentData: Comment) {
+export async function addComment(commentData: CommentData) {
   const { postId, userId, image, message, font } = commentData
-
+  console.log(commentData)
   const [result] = await db('comments').insert({
     post_id: postId,
     user_id: userId,
