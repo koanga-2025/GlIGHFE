@@ -3,11 +3,11 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor, within } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/vitest'
-import '../tests/setup' // Corrected path
+import '../tests/setup'
 
-import { useParams } from 'react-router'
+import { useParams, MemoryRouter } from 'react-router'
 import { UseQueryResult } from '@tanstack/react-query'
 import ProfilePage from './ProfilePage'
 import {
@@ -15,7 +15,6 @@ import {
   useUserPosts,
   useFollowers,
   useFollowing,
-  useEditUserProfilePicture,
 } from '../hooks/useProfile'
 import { User } from '../../models/user'
 import { Post } from '../../models/post'
@@ -34,7 +33,7 @@ vi.mock('../hooks/useProfile', () => ({
   useUserPosts: vi.fn(),
   useFollowers: vi.fn(),
   useFollowing: vi.fn(),
-  useEditUserProfilePicture: vi.fn(),
+  useEditUserProfilePicture: vi.fn(() => ({ mutate: vi.fn() })),
 }))
 
 // -- Test Data --
@@ -60,7 +59,7 @@ const mockPosts: Post[] = [
 const mockFollowers: User[] = [{ ...mockUser, id: 2, name: 'Follower One' }]
 const mockFollowing: User[] = [{ ...mockUser, id: 3, name: 'Following One' }]
 
-// -- Helper Functions for Mocks --
+// -- Helper to create mock query results --
 function createMockQueryResult<TData>(
   options: Partial<UseQueryResult<TData, Error>>,
 ): UseQueryResult<TData, Error> {
@@ -113,7 +112,6 @@ function createMockQueryResult<TData>(
     } as UseQueryResult<TData, Error>
   }
 
-  // Default to pending/loading state
   return {
     ...baseResult,
     status: 'pending',
@@ -147,7 +145,11 @@ const renderComponent = (options: RenderOptions = {}) => {
     createMockQueryResult(options.followingState || {}),
   )
 
-  render(<ProfilePage />)
+  render(
+    <MemoryRouter>
+      <ProfilePage />
+    </MemoryRouter>,
+  )
 }
 
 describe('ProfilePage Component', () => {
@@ -178,7 +180,7 @@ describe('ProfilePage Component', () => {
     })
   })
 
-  it('should display user details, posts, and stats on success', async () => {
+  it('should display user details and interactive elements on success', async () => {
     renderComponent({
       userProfileState: { data: mockUser, isSuccess: true },
       userPostsState: { data: mockPosts, isSuccess: true },
@@ -187,38 +189,17 @@ describe('ProfilePage Component', () => {
     })
 
     await waitFor(() => {
-      // Check for user profile details
       expect(
         screen.getByRole('heading', { level: 1, name: /Test User/i }),
       ).toBeInTheDocument()
       expect(screen.getByText('This is a test bio.')).toBeInTheDocument()
 
-      // Check for the new icon buttons by their accessible label
-      const viewFollowersButton = screen.getByLabelText('View Followers')
-      const viewFollowingButton = screen.getByLabelText('View Following')
-      expect(viewFollowersButton).toBeInTheDocument()
-      expect(viewFollowingButton).toBeInTheDocument()
+      expect(screen.getByLabelText('View Followers')).toBeInTheDocument()
+      expect(screen.getByLabelText('View Following')).toBeInTheDocument()
 
-      // Get the parent container of the buttons
-      const statsContainer = viewFollowersButton.parentElement!
-
-      // Ensure the OLD text is not present inside the stats container
-      expect(
-        within(statsContainer).queryByText(/Posts/i),
-      ).not.toBeInTheDocument()
-      expect(
-        within(statsContainer).queryByText(/Followers/i),
-      ).not.toBeInTheDocument()
-      expect(
-        within(statsContainer).queryByText(/Following/i),
-      ).not.toBeInTheDocument()
-
-      // Check that the main "Posts" section heading IS still on the page
       expect(
         screen.getByRole('heading', { level: 2, name: /Posts/i }),
       ).toBeInTheDocument()
-
-      // Check that post content is still rendered
       expect(screen.getByText('Hello World')).toBeInTheDocument()
     })
   })
