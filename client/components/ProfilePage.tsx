@@ -92,15 +92,13 @@ function ProfilePage() {
         /> */}
         <div className="mb-6 flex h-48 w-48 items-center space-x-4 overflow-hidden rounded-[100%] bg-gray-900 shadow-md">
           {userProfile.profile_picture && (
-            <div className="-m-0">
-              <Image
-                cloudName="dfjgv0mp6"
-                publicId={userProfile.profile_picture}
-                width="192"
-                height="192"
-                crop="fill"
-              />
-            </div>
+            <Image
+              cloudName="dfjgv0mp6"
+              publicId={userProfile.profile_picture}
+              width="192"
+              height="192"
+              crop="fill"
+            />
           )}
         </div>
         <div>
@@ -128,7 +126,7 @@ function ProfilePage() {
       {/* User Posts Section */}
       <h2 className="mb-4 text-2xl font-semibold text-white">Posts</h2>
       {userPosts && userPosts.length > 0 ? (
-        <div className="flex flex-col gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-col gap-4">
           {userPosts.map((post) => (
             <Post key={post.id} post={post} />
           ))}

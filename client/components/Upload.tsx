@@ -54,7 +54,7 @@ function UploadPage() {
             ...previousData,
             message: previousData.message + emojiObject.emoji,
           }
-        : { ...previousData },
+        : previousData,
     )
   }
 
