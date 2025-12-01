@@ -28,5 +28,5 @@ export async function seed(knex) {
   )
 
   // Re-enable foreign key checks
-  await knex.raw('PRAGMA foreign_keys = ON;')
+  // await knex.raw('PRAGMA foreign_keys = ON;')
 }
