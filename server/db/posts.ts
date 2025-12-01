@@ -27,7 +27,6 @@ export async function getAllPostsWithAuthor(db = connection): Promise<Post[]> {
       'posts.image as imageUrl',
       'posts.message',
       'posts.date_added as dateAdded',
-      'users.name as userName',
       'users.profile_picture as profilePicture',
     )
     .orderBy('posts.date_added', 'desc')

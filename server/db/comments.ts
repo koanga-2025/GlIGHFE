@@ -27,7 +27,7 @@ export async function getCommentsByPostId(postId: number) {
   return matchingComments
 }
 
-export async function getCommentsByUserId(userId: number) {
+export async function getCommentsByUserId(userId: string) {
   const matchingComments = await db('comments').where('user_id', userId)
   return matchingComments
 }
@@ -35,7 +35,6 @@ export async function getCommentsByUserId(userId: number) {
 //ADD
 export async function addComment(commentData: CommentData) {
   const { postId, userId, image, message, font } = commentData
-  console.log(commentData)
   const [result] = await db('comments').insert({
     post_id: postId,
     user_id: userId,

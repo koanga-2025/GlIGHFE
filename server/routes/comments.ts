@@ -27,7 +27,7 @@ router.get('/posts/:postid', async (req, res) => {
 
 router.get('/users/:userid', async (req, res) => {
   try {
-    const userId = Number(req.params.userid)
+    const userId = req.params.userid
     const comments = await db.getCommentsByUserId(userId)
     res.json(comments)
   } catch (error) {
@@ -61,7 +61,7 @@ router.patch('/:id', async (req, res) => {
     res.sendStatus(200)
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: 'Something went wrong updating show' })
+    res.status(500).json({ message: 'Something went wrong updating comment' })
   }
 })
 
@@ -74,7 +74,7 @@ router.delete('/:id', async (req, res) => {
     res.sendStatus(200)
   } catch (error) {
     console.log(error)
-    res.status(500).json({ message: 'Something went wrong updating show' })
+    res.status(500).json({ message: 'Something went wrong updating comment' })
   }
 })
 

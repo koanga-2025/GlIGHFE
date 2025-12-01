@@ -109,7 +109,6 @@ export function CommentSection({ postId }: Props) {
 
       try {
         await addCommentMutation.mutateAsync(newComment)
-        console.log('mutating')
       } catch (error) {
         console.error('Failed to add comment:', error)
       }

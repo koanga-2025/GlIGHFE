@@ -12,7 +12,6 @@ function MainFeed() {
   if (isError) {
     return <div>Error fetching posts</div>
   }
-  console.log(posts)
 
   return (
     <div className="h-screen p-4">

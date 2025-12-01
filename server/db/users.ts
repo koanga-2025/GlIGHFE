@@ -96,7 +96,6 @@ export async function getUserPosts(
       'posts.message',
       'posts.image as imageUrl',
       'posts.date_added as dateAdded', // A* Fetch the date as a string
-      'users.name as userName',
       'users.profile_picture as profilePicture',
     )
     .where('users.auth_id', authId)

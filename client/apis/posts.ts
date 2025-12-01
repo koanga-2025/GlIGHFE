@@ -14,7 +14,6 @@ export async function fetchAllPosts(): Promise<Post[]> {
 
 export async function fetchAllPostsWithAuthor(): Promise<PostWithAuthor[]> {
   const response = await request.get(`${rootURL}/withAuthor`)
-  console.log(response.body)
   return response.body.posts as PostWithAuthor[]
 }
 
