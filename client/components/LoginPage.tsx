@@ -58,7 +58,9 @@ function LoginPage() {
     })
   }
 
-  const handleChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = evt.target
     setFormState((prev) => ({
       ...prev,
