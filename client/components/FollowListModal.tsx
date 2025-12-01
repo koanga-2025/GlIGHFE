@@ -28,25 +28,23 @@ const FollowListModal: React.FC<FollowListModalProps> = ({
         onClose()
       }
     }
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isOpen, onClose])
 
-  useEffect(() => {
     const handleEscapeKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose()
       }
     }
+
     if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside)
       document.addEventListener('keydown', handleEscapeKey)
+      document.body.style.overflow = 'hidden'
     }
+
     return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
       document.removeEventListener('keydown', handleEscapeKey)
+      document.body.style.overflow = 'unset'
     }
   }, [isOpen, onClose])
 
@@ -54,6 +52,7 @@ const FollowListModal: React.FC<FollowListModalProps> = ({
     if (isOpen) {
       document.body.style.overflow = 'hidden'
     }
+
     return () => {
       document.body.style.overflow = 'unset'
     }
@@ -116,7 +115,7 @@ const FollowListModal: React.FC<FollowListModalProps> = ({
                 key={user.auth_id}
                 user={user}
                 onClick={onClose}
-                className="flex items-center space-x-4 border-b py-2 last:border-b hover:bg-gray-50"
+                className="flex items-center space-x-4 border-b py-2 last:border-b-0 hover:bg-gray-50"
               >
                 <img
                   src={user.profile_picture || '/images/placeholder-avatar.png'}
