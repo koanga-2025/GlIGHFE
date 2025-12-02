@@ -46,3 +46,12 @@ export async function addPost(post: PostData): Promise<Post> {
     .returning('*')
   return result[0]
 }
+
+export async function deletePost(post: Post): Promise<Post> {
+  const deletedEntry = await db('posts')
+    .where('id', post.id)
+    .delete()
+    .returning('*')
+  // console.log(deletedEntry)
+  return deletedEntry[0]
+}

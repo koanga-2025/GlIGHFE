@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import * as API from '../apis/posts.ts'
 import { fetchAllPosts, fetchAllPostsWithAuthor } from '../apis/posts'
-import { PostData } from '../../models/post.ts'
+import { Post, PostData } from '../../models/post.ts'
 
 export function usePosts() {
   const query = useQuery({ queryKey: ['posts'], queryFn: fetchAllPosts })
@@ -35,6 +35,24 @@ export function useAddPost() {
       // Refresh the user's profile page to show their new post
       queryClient.invalidateQueries({
         queryKey: ['profilePosts', variables.userId],
+      })
+    },
+  })
+}
+
+export function useDeletePost() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (post: Post) => API.deletePost(post),
+    onSuccess: (_, variables) => {
+      // Refresh the main feed to show the new post
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
+      // Refresh the user's profile page to show their new post
+      queryClient.invalidateQueries({
+        queryKey: ['profilePosts', variables.userId],
+      })
+      queryClient.invalidateQueries({
+        queryKey: ['posts'],
       })
     },
   })

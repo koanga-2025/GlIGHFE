@@ -313,7 +313,7 @@ function ProfilePage() {
           ))}
         </div>
       ) : (
-        <p className="text-gray-400">No posts yet.</p>
+        <p className="hidden text-gray-400">No posts yet.</p>
       )}
 
       {/* Follower List Modal */}

@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import * as db from '../db/posts'
 import { StatusCodes } from 'http-status-codes'
+import { Post } from '../../models/post'
 
 const router = Router()
 
@@ -34,6 +35,25 @@ router.post('/', async (req, res) => {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: 'Something went wrong' })
+  }
+})
+
+router.delete('/', async (req, res) => {
+  try {
+    const post: Post = req.body
+    const deletedPost = await db.deletePost(post)
+    if (!deletedPost) {
+      // Check if deletion was unsuccessful
+      return res.send('post not found')
+    }
+    res.status(StatusCodes.NO_CONTENT).json(deletedPost)
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err.message)
+    } else {
+      console.error('something went wrong')
+    }
+    res.sendStatus(500)
   }
 })
 
