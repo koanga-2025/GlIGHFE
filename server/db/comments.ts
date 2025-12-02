@@ -63,6 +63,11 @@ export async function updateComment(commentId: number, commentData: Comment) {
 
 //DELETE
 
-export async function deleteComment(commentId: number) {
-  return await db('comments').where('id', commentId).del()
+export async function deleteComment(comment: Comment): Promise<Comment> {
+  const deletedComment = await db('comments')
+    .where('id', comment.id)
+    .delete()
+    .returning('*')
+  console.log(deletedComment)
+  return deletedComment[0]
 }

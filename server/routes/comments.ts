@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import * as db from '../db/comments'
+import { Comment } from '../../models/comment'
 
 const router = Router()
 
@@ -74,14 +75,23 @@ router.patch('/:id', async (req, res) => {
 
 // DELETE /api/v1/comments
 
-router.delete('/:id', async (req, res) => {
+router.delete('/', async (req, res) => {
   try {
-    const commentId = Number(req.params.id)
-    await db.deleteComment(commentId)
-    res.sendStatus(200)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ message: 'Something went wrong updating comment' })
+    const comment: Comment = req.body
+    // console.log(comment)
+    const deletedComment = await db.deleteComment(comment)
+    if (!deletedComment) {
+      // Check if deletion was unsuccessful
+      return res.send('comment not found')
+    }
+    res.json(deletedComment)
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err.message)
+    } else {
+      console.error('something went wrong')
+    }
+    res.sendStatus(500)
   }
 })
 

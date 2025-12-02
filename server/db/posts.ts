@@ -33,7 +33,9 @@ export async function getAllPostsWithAuthor(db = connection): Promise<Post[]> {
   return posts
 }
 
-export async function getPostbyIdWithAuthor(id: number): Promise<Post | undefined> {
+export async function getPostbyIdWithAuthor(
+  id: number,
+): Promise<Post | undefined> {
   const post = await db('posts')
     .join('users', 'posts.user_id', 'users.auth_id')
     .select(
@@ -65,10 +67,10 @@ export async function addPost(post: PostData): Promise<Post> {
 }
 
 export async function deletePost(post: Post): Promise<Post> {
-  const deletedEntry = await db('posts')
+  const deletedPost = await db('posts')
     .where('id', post.id)
     .delete()
     .returning('*')
   // console.log(deletedEntry)
-  return deletedEntry[0]
+  return deletedPost[0]
 }

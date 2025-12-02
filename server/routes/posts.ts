@@ -57,7 +57,7 @@ router.delete('/', async (req, res) => {
       // Check if deletion was unsuccessful
       return res.send('post not found')
     }
-    res.status(StatusCodes.NO_CONTENT).json(deletedPost)
+    res.json(deletedPost)
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.error(err.message)
