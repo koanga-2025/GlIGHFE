@@ -84,3 +84,55 @@ export function useFollowing(authId: string) {
     queryFn: () => fetchFollowing(authId),
   })
 }
+
+export function useFollowUser(currentAuthId?: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      authIdToFollow,
+      token,
+    }: {
+      authIdToFollow: string
+      token: string
+    }) => API.followUser(authIdToFollow, token),
+    onSuccess: (_, { authIdToFollow }) => {
+      queryClient.invalidateQueries({
+        queryKey: ['profileFollowers', authIdToFollow],
+      })
+      if (currentAuthId) {
+        queryClient.invalidateQueries({
+          queryKey: ['profileFollowing', currentAuthId],
+        })
+      }
+    },
+    onError: (error) => {
+      console.error('Failed to follow user:', error)
+    },
+  })
+}
+
+export function useUnfollowUser(currentAuthId?: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({
+      authIdToUnfollow,
+      token,
+    }: {
+      authIdToUnfollow: string
+      token: string
+    }) => API.unfollowUser(authIdToUnfollow, token),
+    onSuccess: (_, { authIdToUnfollow }) => {
+      queryClient.invalidateQueries({
+        queryKey: ['profileFollowers', authIdToUnfollow],
+      })
+      if (currentAuthId) {
+        queryClient.invalidateQueries({
+          queryKey: ['profileFollowing', currentAuthId],
+        })
+      }
+    },
+    onError: (error) => {
+      console.error('Failed to unfollow user:', error)
+    },
+  })
+}
