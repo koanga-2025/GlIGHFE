@@ -1,12 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
+import request from 'superagent'
 
 import * as API from '../apis/posts.ts'
 import { Post, PostData, PostWithAuthor } from '../../models/post.ts'
-import {
-  fetchAllPosts,
-  fetchAllPostsWithAuthor,
-  fetchPostByIdWithAuthor,
-} from '../apis/posts'
+import { fetchAllPosts, fetchPostByIdWithAuthor } from '../apis/posts'
 
 export function usePosts() {
   const query = useQuery({ queryKey: ['posts'], queryFn: fetchAllPosts })
@@ -18,14 +20,21 @@ export function usePosts() {
 }
 
 export function usePostsWithAuthor() {
-  const query = useQuery({
-    queryKey: ['posts'],
-    queryFn: fetchAllPostsWithAuthor,
+  return useInfiniteQuery({
+    queryKey: ['postsWithAuthor'],
+    queryFn: async ({ pageParam = 0 }) => {
+      const response = await request.get(
+        `/api/v1/posts/withAuthor?limit=10&offset=${pageParam}`,
+      )
+      return response.body.posts as PostWithAuthor[]
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      // If we got less than 10, we're at the end
+      if (lastPage.length < 10) return undefined
+      return allPages.length * 10
+    },
+    initialPageParam: 0,
   })
-  return {
-    ...query,
-    add: useAddPost,
-  }
 }
 
 export function useGetPostById(postId: PostWithAuthor['id']) {

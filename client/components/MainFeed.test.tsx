@@ -13,6 +13,13 @@ import MainFeed from './MainFeed'
 import { usePostsWithAuthor } from '../hooks/usePosts'
 import { PostWithAuthor } from '../../models/post'
 
+// Mock IntersectionObserver for tests
+global.IntersectionObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  disconnect: vi.fn(),
+  unobserve: vi.fn(),
+}))
+
 // Mock hooks
 vi.mock('../hooks/usePosts', () => ({
   usePostsWithAuthor: vi.fn(),
@@ -50,6 +57,9 @@ describe('MainFeed component', () => {
       data: undefined,
       isLoading: true,
       isError: false,
+      fetchNextPage: vi.fn(),
+      hasNextPage: false,
+      isFetchingNextPage: false,
     } as never)
 
     renderWithProviders(<MainFeed />)
@@ -62,6 +72,9 @@ describe('MainFeed component', () => {
       data: undefined,
       isLoading: false,
       isError: true,
+      fetchNextPage: vi.fn(),
+      hasNextPage: false,
+      isFetchingNextPage: false,
     } as never)
 
     renderWithProviders(<MainFeed />)
@@ -92,9 +105,15 @@ describe('MainFeed component', () => {
     ]
 
     vi.mocked(usePostsWithAuthor).mockReturnValue({
-      data: mockPosts,
+      data: {
+        pages: [mockPosts], // Infinite query format: array of pages
+        pageParams: [0],
+      },
       isLoading: false,
       isError: false,
+      fetchNextPage: vi.fn(),
+      hasNextPage: false,
+      isFetchingNextPage: false,
     } as never)
 
     renderWithProviders(<MainFeed />)
