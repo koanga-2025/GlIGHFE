@@ -98,7 +98,7 @@ export function CommentSection({ postId }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (authId) {
+    if (authId && formData.message.length > 0) {
       const newComment: CommentData = {
         postId: postId,
         userId: authId,
