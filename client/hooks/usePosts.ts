@@ -36,7 +36,6 @@ export function useGetPostById(postId: PostWithAuthor['id']) {
   })
   return {
     ...query,
-    add: useAddPost,
   }
 }
 
