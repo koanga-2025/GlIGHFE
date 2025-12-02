@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router'
 import { IfAuthenticated, IfNotAuthenticated } from './Authenticated'
 import { UserData } from '../../models/user'
 import Loading from './Loading'
-// import { PhotoUploader } from './PhotoUploader'
+import { PhotoUploader } from './PhotoUploader'
 
 function LoginPage() {
   const emptyFormState = {
@@ -20,7 +20,7 @@ function LoginPage() {
   const { loginWithRedirect, isAuthenticated, user } = useAuth0()
   const navigate = useNavigate()
   const [formState, setFormState] = useState<UserData>(emptyFormState)
-  // const [imageId, setImageId] = useState('')
+  const [imageId, setImageId] = useState('')
   const authId = user?.sub ?? ''
   const createMutation = useMutation({
     mutationFn: (user: UserData) => createUser(user),
@@ -72,11 +72,15 @@ function LoginPage() {
     }))
   }
 
-  // function handleImageChange(newImage: string) {
-  //   setImageId(newImage)
-  //   console.log(newImage)
-  //   console.log(imageId)
-  // }
+  function handleImageChange(newImage: string) {
+    setImageId(newImage)
+    setFormState((prev) => ({
+      ...prev,
+      profilePicture: newImage,
+    }))
+    console.log(newImage)
+    console.log(imageId)
+  }
 
   const handleSubmit = async (evt: FormEvent) => {
     evt.preventDefault()
@@ -113,6 +117,7 @@ function LoginPage() {
             >
               Name:
               <input
+                required
                 type="text"
                 id="name"
                 name="name"
@@ -144,18 +149,18 @@ function LoginPage() {
                 }}
               ></textarea>
             </label>
-            {/* <label
+            <label
               htmlFor="Profile Picture"
               className="text-heading mb-2.5 block text-sm font-medium"
             >
               Profile Picture:
-            <div>
-              <PhotoUploader
-                image={imageId}
-                onImageChange={handleImageChange}
-              />
-            </div>
-            </label> */}
+              <div>
+                <PhotoUploader
+                  image={imageId}
+                  onImageChange={handleImageChange}
+                />
+              </div>
+            </label>
           </div>
           <button
             type="submit"
