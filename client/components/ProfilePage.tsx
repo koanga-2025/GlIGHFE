@@ -212,7 +212,7 @@ function ProfilePage() {
   return (
     <div className="h-full">
       {/* Profile Header */}
-      <div className="mb-4 flex w-screen items-center justify-between space-x-4 bg-[#b9db97] p-2 align-middle shadow-md">
+      <div className="mb-4 flex w-screen items-center justify-between space-x-4 p-2 align-middle shadow-md">
         <div className="flex gap-3">
           {/* Profile Picture */}
           <div className="grid place-items-center">
@@ -289,10 +289,10 @@ function ProfilePage() {
               </div>
             ) : (
               <div className="flex flex-col gap-2">
-                <h1 className="-mb-2 text-3xl font-bold text-black">
+                <h1 className="-mb-2 break-all text-3xl font-bold text-black">
                   {userProfile.name}
                 </h1>
-                <p className="text-gray-900">
+                <p className="break-all text-gray-900">
                   {userProfile.bio || 'No bio provided.'}
                 </p>
               </div>
