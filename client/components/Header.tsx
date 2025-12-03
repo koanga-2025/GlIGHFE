@@ -10,7 +10,7 @@ function Header() {
   }
 
   return (
-    <header className="flex flex-row items-center justify-between p-3">
+    <header className="flex flex-row items-center justify-between bg-[#b9da97] p-3">
       <div className="flex flex-row items-center">
         <h1 className="text-4xl">GlIGHFE!</h1>
         <img
