@@ -60,7 +60,7 @@ export function PhotoUploader({ image, onImageChange }: Props) {
         onChange={(e) => handleChange(e)}
         ref={fileInputRef}
         style={{ display: 'none' }}
-      ></input>
+      />
       {/* {!isPending && <button type="submit">Submit</button>} */}
     </div>
   )
