@@ -55,11 +55,13 @@ function Post({ post, editMode = false }: Props) {
               cloudName="dfjgv0mp6"
               publicId={post.profilePicture}
               alt={post.userName + "'s profile"}
+              width="300"
+              height="300"
               crop="fill"
             />
           </button>
         </div>
-        <h3 className="break-all pl-2 text-xl font-bold">{post.userName}</h3>
+        <h3 className="pl-2 text-xl font-bold">{post.userName}</h3>
         {editMode ? (
           <div>
             <button onClick={handleProfileClick} className="text-right">
