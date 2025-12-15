@@ -7,7 +7,7 @@ We had a team of six people,  working largely in teams of two, this may explain 
 ## Project Presentation
 [Powerpoint](https://docs.google.com/presentation/d/1YEQhvHDdqO0dNPHsEwUHJVBAxPzS3nUESGwUCxu06xc/edit?usp=sharing)
 
-[Presentation recording]((https://youtu.be/uGiN0ZuxMgY))
+[Presentation recording] (https://youtu.be/uGiN0ZuxMgY)
 ## Team Composition
 
 Product Owner: Sofia Tarn
